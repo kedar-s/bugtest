@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="deploy-to-local-repository" name="org.tolven.fdb">
+	<!-- 
+	Build file for org.tolven.fdb 
+	-->
+	<import file="../plugin/buildImport.xml"/>
+
+	<property name="buildFolder" value="build"/>
+	<!-- 
+	Source code will be included in the devLib jar file if true. Otherwise, source code
+	known to this build script (in the sources folder) will not be added to the plugin.
+	Source code may be published in devLib for several reasons: 1) remote-debugging, 
+	2) it meets the obligation to make source code available with most open-source licenses,
+	3) Provides a way to verify that a particular plugin version has a particular 
+	source-code change. But this is not a substitute for source-code management tools.
+	 -->
+	<property name="includeSourceInDevLib" value="true"/>
+
+
+
+	<path id="plugin.classpath">
+		<pathelement location="${buildFolder}/ejb/classes"/>
+		<pathelement location="${buildFolder}/web/classes"/>
+		<pathelement location="lib/openssoclientsdk.jar"/>
+	</path>
+	<target name="checkBundleDates">
+		<uptodate property="native2ascii.notRequired" targetfile="build/fdbLocale.jar">
+			<srcfiles dir="." includes="**/*.properties" />
+		</uptodate>
+	</target>
+	<target name="native2ascii" depends="checkBundleDates" description="Build fdbLocale.jar" unless="native2ascii.notRequired">
+		<native2ascii encoding="UTF-8" src="locale" dest="build/bundle/messages" />
+	</target>
+
+
+	<target name="jars" description="Build fdbLocale.jar">
+		<antcall target="native2ascii" />
+		<jar destfile="build/fdbLocale.jar">
+			<manifest>
+				<attribute name="Built-By" value="Tolven Healthcare Innovations" />
+			</manifest>
+			<zipfileset dir="build/bundle/messages" prefix="messages" />
+		</jar>
+	</target>
+	<target name="build-plugin" depends="jar" description="Build all sections of this plugin">
+		<zip destfile="${zipFileName}">
+			<!-- Add Manifest section -->
+			<zipfileset dir="manifest"/>
+		</zip>
+		<!-- Begin list of sections to build. Each section is added to the plugin zip file. -->
+		<antcall target="buildSection">
+			<param name="section" value="ejb"/>
+		</antcall>
+		<antcall target="buildSection">
+			<param name="section" value="app"/>
+		</antcall>
+		<mkdir dir="${buildFolder}/web/classes"/>
+		<javac destdir="${buildFolder}/web/classes" debug="true">
+			<src path="web/source" />
+			<classpath refid="project.classpath" />
+			<classpath path="web/lib/openssoclientsdk.jar" />
+			<classpath path="${buildFolder}/ejb/classes" />
+		</javac>
+
+		<!-- End of list of sections to build -->
+		<jar destfile="${buildFolder}/org.tolven.fdb.web.jar">
+			<manifest>
+				<attribute name="Built-By" value="Tolven Healthcare Innovations" />
+			</manifest>
+			<zipfileset dir="${buildFolder}/web/classes" />
+		</jar>
+		<!-- Add DevLib.jar to plugin zip -->
+		<zip destfile="${zipFileName}" update="true">
+			<zipfileset dir="${buildFolder}">
+				<include name="devLib.jar"/>
+				<include name="org.tolven.fdb.web.jar"/>
+				<include name="**/*.class"/>
+			</zipfileset>
+			<zipfileset dir="." includes="scriptInclude/*.*"/>
+			<zipfileset dir="web">
+				<exclude name="**/openssoclientsdk.jar"/>
+			</zipfileset>
+			<zipfileset dir="." includes="locale/*.*"/>
+		</zip>
+	</target>
+	<target  name="compile" depends="init" description="Compile Tolven EJB modules">
+		<mkdir dir="build/bin"/>
+	</target>
+
+	<target name="jar" depends="compile,jars" description="devLib.jar">
+		<jar destfile="build/devLib.jar">
+			<zipfileset dir="${buildFolder}/bin" excludes="test/org/**,test/rules/**" />
+		</jar>
+	</target>
+
+	<path id="classpath-openjpa" description="The classpath to use for compiling and running">
+		<pathelement path="build/ejb/classes" />
+		<fileset dir="${basedir}/ejb/lib">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${basedir}/lib">
+			<include name="slf4j-api-*.jar" />
+			<include name="slf4j-simple-*.jar" />
+			<include name="shiro-core-*.jar" />
+			<include name="openjpa-all-*.jar" />
+			<include name="postgresql-*.jdbc4.jar" />
+		</fileset>
+		<fileset dir="${tolvenConfig.location}/devLib">
+			<include name="*.jar" />
+			<exclude name="org.tolven.library.apache-ant.ant.jar"/>
+			<exclude name="org.tolven.fdb.devLib.jar"/>
+		</fileset>
+	</path>
+
+	<path id="javaagent">
+		<fileset dir="${basedir}/lib">
+			<include name="openjpa-*.jar" />
+			<exclude name="openjpa-all-*.jar" />
+		</fileset>
+	</path>
+	<pathconvert property="javaagent" refid="javaagent" />
+
+
+	<target name="run-jpa-unit-tests" description="Run the example Main program">
+		<copy todir="build/ejb/classes/META-INF">
+			<fileset dir="testResources/META-INF" />
+		</copy>
+
+		<java classname="test.org.tolven.app.bean.TestFDBBean" fork="yes">
+			<classpath  refid="classpath-openjpa" />
+			<jvmarg value="-javaagent:${javaagent}" />
+			<jvmarg value="-Xdebug" />
+			<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=9876" />
+
+		</java>
+	</target>
+	<target name="javadoc" description="Generate Javadoc for this plugin">
+		<javadoc access="public" author="true" destdir="${respositoryLocal.location}/javadoc/${plugin(id)}-${plugin(version)}" doctitle="Tolven FDB"
+			packagenames="*"
+			classpathref="project.classpath" 
+			source="1.6" sourcepath="ejb/source:web/source" splitindex="true" use="true" version="true"
+			encoding="UTF-8" docencoding="UTF-8"/>
+	</target>
+</project>

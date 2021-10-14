@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<trim xmlns="urn:tolven-org:trim:4.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xsi:schemaLocation="urn:tolven-org:trim:4.0 http://www.tolven.org/xsd/trim4">
+	<abstract>true</abstract>	
+    <name>obs/evn/labOrder</name>    
+    <author>Tolven</author>
+    <menu>global:labOrderMenu</menu>
+	<act classCode="OBS" moodCode="RQO">
+		<bind application="echr" phase="create">
+			<placeholder bindAction="merge">
+				<path>echr:patient:labOrder</path>
+			</placeholder>
+		</bind>
+		<effectiveTime>
+			<label>Order for date</label>
+			<new datatype="TS" function="now"/>
+		</effectiveTime>
+ 		<observation> 
+ 			<value>
+ 				<label>Reason</label>
+ 				<ST></ST>
+ 			</value>
+			<value>
+				<label>Priority</label>
+				<valueSet>priority</valueSet>
+				<CE/>
+			</value>
+ 			<value>
+ 				<label>Frequency</label>
+ 				<ST></ST>
+ 			</value>
+ 			<value>
+ 				<label>Timing</label>
+ 				<ST></ST>
+ 			</value>
+			<value>
+				<label>Specimen Type</label>
+				<valueSet>specimenType</valueSet>
+				<CE/>
+			</value>
+			<value>
+				<label>Container Type</label>
+				<valueSet>containerType</valueSet>
+				<CE/>
+			</value>
+		</observation>
+		<!-- Compute for inserting problem associations -->
+		<compute>
+			<type>org.tolven.process.InsertAssociatedPlaceholder</type>
+			<property name="enabled">
+				<value xsi:type="xs:boolean">false</value>
+			</property>
+			<property name="arName">
+				<value xsi:type="xs:string">problem</value>
+			</property>
+			<property name="arDirection">
+				<value xsi:type="xs:string">OUT</value>
+			</property>
+			<property name="arTypeCode">
+				<value xsi:type="xs:string">RSON</value>
+			</property>
+			<property name="template">
+				<value xsi:type="xs:string">associatedProblem</value>
+			</property>
+			<property name="placeholderList">
+				<value xsi:type="xs:string">#{patient.path}:problems:activeAssociations</value>
+			</property>
+			<property name="placeholderPath">
+				<value xsi:type="xs:string"></value>
+			</property>
+			<property name="action">
+				<value xsi:type="xs:string">add</value>
+			</property>
+			<property name="position">
+				<value xsi:type="xs:string">0</value>
+			</property>
+		</compute>
+		<!-- Compute for inserting diagnosis associations -->
+		<compute>
+			<type>org.tolven.process.InsertAssociatedPlaceholder</type>
+			<property name="enabled">
+				<value xsi:type="xs:boolean">false</value>
+			</property>
+			<property name="arName">
+				<value xsi:type="xs:string">diagnosis</value>
+			</property>
+			<property name="arDirection">
+				<value xsi:type="xs:string">OUT</value>
+			</property>
+			<property name="arTypeCode">
+				<value xsi:type="xs:string">RSON</value>
+			</property>
+			<property name="template">
+				<value xsi:type="xs:string">associatedDiagnosis</value>
+			</property>
+			<property name="placeholderList">
+				<value xsi:type="xs:string">#{patient.path}:diagnoses:currentAssociations</value>
+			</property>
+			<property name="placeholderPath">
+				<value xsi:type="xs:string"></value>
+			</property>
+			<property name="action">
+				<value xsi:type="xs:string">add</value>
+			</property>
+			<property name="position">
+				<value xsi:type="xs:string">0</value>
+			</property>
+		</compute>
+	</act>
+</trim>

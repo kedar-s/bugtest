@@ -1,0 +1,78 @@
+package epOfficeOrders
+ /* Tolven */
+import java.util.*;
+import org.tolven.trim.*;
+import org.tolven.trim.ex.*;
+import org.tolven.doc.entity.*;
+import java.lang.Integer;
+import org.tolven.app.entity.MenuStructure;
+import org.tolven.app.entity.MenuData;
+import org.tolven.app.bean.Mode;
+import org.tolven.app.bean.Plan;
+import org.tolven.core.entity.Status;
+import org.tolven.logging.TolvenLogger;
+import org.tolven.process.FDBCompute;
+
+global org.tolven.app.AppEvalAdaptor app;
+global Date now;
+
+//Outpatient Medication Orders
+
+rule "Place ePrescription on active officeMedicationOrders list"
+	when
+		$msList: MenuStructure( path == "echr:patient:officeMedicationOrders:active" )
+		$ms: MenuStructure( role == "placeholder", path == "echr:patient:officeMedicationOrder" )
+		$md: MenuData( menuStructure == $ms, actStatus=='active')		
+		$trim:TrimEx(name=="obs/evn/patientPrescription") 
+	then
+		app.info("Place ePrescription on active medication list");
+		MenuData md = app.createReferenceMD( $md, $msList );		
+end
+
+rule "Place ePrescription on inactive officeMedicationOrders list"
+	when
+		$msList: MenuStructure( path == "echr:patient:officeMedicationOrders:inactive" )
+		$ms: MenuStructure( role == "placeholder", path == "echr:patient:officeMedicationOrder" )
+		$md: MenuData( menuStructure == $ms, actStatus=='completed')		
+	then
+		app.info("Place ePrescription on active medication list");
+		MenuData md = app.createReferenceMD( $md, $msList );		
+end
+rule "Place ePrescription on nullified officeMedicationOrders list"
+	when
+		$msList: MenuStructure( path == "echr:patient:officeMedicationOrders:nullified" )
+		$ms: MenuStructure( role == "placeholder", path == "echr:patient:officeMedicationOrder" )
+		$md: MenuData( menuStructure == $ms, actStatus=='nullified')		
+	then
+		app.info("Place ePrescription on active medication list");
+		MenuData md = app.createReferenceMD( $md, $msList );		
+end
+
+rule "Place ePrescription on all Office Medication Orders  list"
+	when
+		$msList: MenuStructure( path == "echr:patient:officeMedicationOrders:all" )
+		$ms: MenuStructure( role == "placeholder", path == "echr:patient:officeMedicationOrder" )
+		$md: MenuData( menuStructure == $ms)		
+	then
+		app.info("Place ePrescription on all Office Medication Orders list");
+		MenuData md = app.createReferenceMD( $md, $msList );		
+end
+
+rule "Place ePrescription on all Office Medication Orders portlet"
+	when
+		$msList: MenuStructure( path == "echr:patient:officeMedicationOrders:all" )
+		$ms: MenuStructure( role == "placeholder", path == "echr:patient:officeMedicationOrder" )
+		$md: MenuData( menuStructure == $ms)		
+	then
+		app.info("Place ePrescription on all Office Medication Orders list");
+		MenuData md = app.createReferenceMD( $md, $msList );		
+end
+rule "Place Medication on Office Medication Orders summary list"
+	when
+		$msMedication: MenuStructure( role == "placeholder", path == "echr:patient:officeMedicationOrder" )
+		$mdMedication: MenuData( menuStructure == $msMedication, string03 == 'active' )
+	then
+		// Add act to patient's Medication list
+		app.createReferenceMD( $mdMedication, "echr:patient:summary:omedsum" );
+end
+

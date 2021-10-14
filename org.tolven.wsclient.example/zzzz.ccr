@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ContinuityOfCareRecord xmlns="urn:astm-org:CCR">
+    <Version>V1.0</Version>
+    <Patient>
+        <ActorID>AC000002</ActorID>
+    </Patient>
+    <From>
+        <ActorLink>
+            <ActorID>AC000001</ActorID>
+        </ActorLink>
+    </From>
+    <Body>
+        <Problems>
+            <Problem>
+                <DateTime>
+                    <Type>
+                        <Text>Onset</Text>
+                    </Type>
+                    <ExactDateTime>2010-07-03T14:30:35-07:00</ExactDateTime>
+                </DateTime>
+                <Type>
+                    <Text>Problem</Text>
+                </Type>
+                <Description>
+                    <Text>High Cholesterol</Text>
+                </Description>
+                <Status>
+                    <Text>Active</Text>
+                </Status>
+            </Problem>
+            <Problem>
+                <DateTime>
+                    <Type>
+                        <Text>Onset</Text>
+                    </Type>
+                    <ExactDateTime>1965-05-18T15:21:25-07:00</ExactDateTime>
+                </DateTime>
+                <Type>
+                    <Text>Problem</Text>
+                </Type>
+                <Description>
+                    <Text>Hay Fever</Text>
+                </Description>
+                <Status>
+                    <Text>Active</Text>
+                </Status>
+            </Problem>
+        </Problems>
+        <Alerts>
+            <Alert>
+                <DateTime>
+                    <Type>
+                        <Text>Start Date</Text>
+                    </Type>
+                    <ExactDateTime>1965-05-18T15:21:25-07:00</ExactDateTime>
+                </DateTime>
+                <Type>
+                    <Text>Allergy</Text>
+                </Type>
+                <Description>
+                    <Text>Ragweed</Text>
+                </Description>
+                <Status>
+                    <Text>Active</Text>
+                </Status>
+            </Alert>
+            <Alert>
+                <DateTime>
+                    <Type>
+                        <Text>Start Date</Text>
+                    </Type>
+                    <ExactDateTime>1965-05-18T15:21:25-07:00</ExactDateTime>
+                </DateTime>
+                <Type>
+                    <Text>Allergy</Text>
+                </Type>
+                <Description>
+                    <Text>Cedar Pollen</Text>
+                </Description>
+                <Status>
+                    <Text>Active</Text>
+                </Status>
+            </Alert>
+        </Alerts>
+        <Encounters>
+            <Encounter>
+                <DateTime>
+                    <Type>
+                        <Text>Encounter DateTime</Text>
+                    </Type>
+                    <ExactDateTime>1965-06-10T20:11:26-07:00</ExactDateTime>
+                </DateTime>
+                <Type>
+                    <Text>Physician Office Visit</Text>
+                </Type>
+                <Description>
+                    <Text>Routine well-baby checkup</Text>
+                </Description>
+            </Encounter>
+            <Encounter>
+                <DateTime>
+                    <Type>
+                        <Text>Encounter DateTime</Text>
+                    </Type>
+                    <ExactDateTime>1966-06-05T22:34:40-07:00</ExactDateTime>
+                </DateTime>
+                <Type>
+                    <Text>Physician Office Visit</Text>
+                </Type>
+                <Description>
+                    <Text>Routine well-baby checkup</Text>
+                </Description>
+            </Encounter>
+            <Encounter>
+                <DateTime>
+                    <Type>
+                        <Text>Encounter DateTime</Text>
+                    </Type>
+                    <ExactDateTime>1967-08-01T12:22:45-07:00</ExactDateTime>
+                </DateTime>
+                <Type>
+                    <Text>Physician Office Visit</Text>
+                </Type>
+                <Description>
+                    <Text>Routine well-baby checkup</Text>
+                </Description>
+            </Encounter>
+            <Encounter>
+                <DateTime>
+                    <Type>
+                        <Text>Encounter DateTime</Text>
+                    </Type>
+                    <ExactDateTime>1968-04-01T22:13:45-08:00</ExactDateTime>
+                </DateTime>
+                <Type>
+                    <Text>Physician Office Visit</Text>
+                </Type>
+                <Description>
+                    <Text>Routine well-baby checkup</Text>
+                </Description>
+            </Encounter>
+            <Encounter>
+                <DateTime>
+                    <Type>
+                        <Text>Encounter DateTime</Text>
+                    </Type>
+                    <ExactDateTime>1969-04-22T04:51:15-08:00</ExactDateTime>
+                </DateTime>
+                <Type>
+                    <Text>Physician Office Visit</Text>
+                </Type>
+                <Description>
+                    <Text>Routine well-baby checkup</Text>
+                </Description>
+            </Encounter>
+            <Encounter>
+                <DateTime>
+                    <Type>
+                        <Text>Encounter DateTime</Text>
+                    </Type>
+                    <ExactDateTime>1970-07-23T11:59:26-07:00</ExactDateTime>
+                </DateTime>
+                <Type>
+                    <Text>Physician Office Visit</Text>
+                </Type>
+                <Description>
+                    <Text>Routine well-baby checkup</Text>
+                </Description>
+            </Encounter>
+        </Encounters>
+    </Body>
+    <Actors>
+        <Actor>
+            <ActorObjectID>AC000001</ActorObjectID>
+            <Organization>
+                <Name>Wellington</Name>
+            </Organization>
+        </Actor>
+        <Actor>
+            <ActorObjectID>AC000004</ActorObjectID>
+            <Organization>
+                <Name>TolvenGen</Name>
+            </Organization>
+        </Actor>
+        <Actor>
+            <ActorObjectID>AC000002</ActorObjectID>
+            <Person>
+                <Name>
+                    <CurrentName>
+                        <Given>Keith</Given>
+                        <Middle>Wade</Middle>
+                        <Family>Teichert</Family>
+                    </CurrentName>
+                </Name>
+                <DateOfBirth>
+                    <ExactDateTime>1961-11-30T00:00:00-08:00</ExactDateTime>
+                </DateOfBirth>
+                <Gender>
+                    <Text>Male</Text>
+                </Gender>
+            </Person>
+            <IDs>
+                <Type>
+                    <Text>MedicalRecordNumber</Text>
+                </Type>
+                <ID>79780220</ID>
+                <IssuedBy>
+                    <ActorID>AC000003</ActorID>
+                </IssuedBy>
+            </IDs>
+            <IDs>
+                <Type>
+                    <Text>SSN</Text>
+                </Type>
+                <ID>480-90-3563</ID>
+                <IssuedBy>
+                    <ActorID>AC000004</ActorID>
+                </IssuedBy>
+            </IDs>
+        </Actor>
+        <Actor>
+            <ActorObjectID>AC000003</ActorObjectID>
+            <Organization>
+                <Name>TolvenGen</Name>
+            </Organization>
+        </Actor>
+    </Actors>
+</ContinuityOfCareRecord>

@@ -1,0 +1,86 @@
+<application xmlns="urn:tolven-org:menuStructure:1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:tolven-org:menuStructure:1.0 http://tolven.org/xsd/menuStructure.xsd">
+	<extends path="global">
+		<list name="drugAllergies" title="Drug Allergies" page="/five/list.xhtml" query="query:select description1 as heading,concepttype as type,conceptid from fdb_allergenpicklist" initialSort="description1">
+			<column name="heading" title="Heading" internal="description1" width="30.0">
+				<output type="selectDrugAllergyInDocument">
+					<a href="javascript:selectDrugAllergy('#{heading}','#{type}','#{conceptid}','#{methodArgs}')">#{heading}</a>
+				</output>
+			</column>
+			<column name="type" title="Name" internal="concepttype" width="10.0">
+				<output type="selectDrugAllergyInDocument">
+					<span>#{type =='1'?'Allergen Group':(type=='2'?'Drug Name':(type=='6'?'Ingredient':''))}</span>
+				</output>
+			</column>
+			<column name="conceptid" title="Conceptid" internal="conceptid" visible="false" />
+		</list>
+	</extends>
+	<extends path="echr"> <!-- used for creating favorite lists of allergies -->
+		<list name="drugAllergies" title="Drug Allergies" page="/five/list.xhtml" query="query:select description1 as heading,concepttype as type,conceptid from fdb_allergenpicklist" initialSort="description1" visible="false">
+			<column name="heading" title="Heading" internal="description1" width="30.0">
+				<output type="favorites">
+					<a href='#' id="#{conceptid}_#{type}" onclick="addFDBDataToFavorites('#{conceptid}',false,'#{heading}','#{methodArgs}','#{type}')">#{heading}</a>
+				</output>
+				<output type="selectDrugAllergyInDocument">
+					<a href="javascript:selectDrugAllergy('#{heading}','#{type}','#{conceptid}','#{methodArgs}')">#{heading}</a>
+				</output>
+			</column>
+			<column name="type" title="Name" internal="concepttype" width="10.0">
+				<output type="favorites">
+					<span>#{type =='1'?'Allergen Group':(type=='2'?'Drug Name':(type=='6'?'Ingredient':''))}</span>
+				</output>
+				<output type="selectDrugAllergyInDocument">
+					<span>#{type =='1'?'Allergen Group':(type=='2'?'Drug Name':(type=='6'?'Ingredient':''))}</span>
+				</output>
+			</column>
+			<column name="conceptid" title="Conceptid" internal="conceptid" visible="false" />
+		</list>
+	</extends>
+	<extends path="global">
+		<list name="fdbMedications" title="FDBMedications" page="/five/list.xhtml" query="query:select descdisplay as name,medid as medid from Fdb_Dispensable where statuscode='0'" initialSort="name">
+			<column name="name" title="Name" internal="descdisplay" width="30.0">
+				<output type="medicationDocument">
+					<a href='#' onclick="selectDrugInMedicationDocument('#{medid}','#{methodArgs}')">#{name}</a>
+				</output>
+				<output type="drugFormulary">
+					<a href='#' onclick="addFdbDrugToFormulary('#{medid}','#{methodArgs}')">#{name}</a>
+				</output>
+				<output type="favorites">
+					<a href='#' id="#{medid}" onclick="addFDBDataToFavorites('#{medid}',false,'#{methodArgs}')">#{name}</a>
+				</output>
+			</column>
+			<column name="medid" title="medid" internal="medid" width="10.0">
+				<output type="medicationDocument">
+					<a href='#' onclick="selectDrugInMedicationDocument('#{medid}','#{methodArgs}')">#{medid}</a>
+				</output>
+				<output type="drugFormulary">
+					<a href='#' onclick="addFdbDrugToFormulary('#{medid}','#{methodArgs}')">#{medid}</a>
+				</output>
+				<output type="favorites">
+					<a href='#' id="#{medid}" onclick="addFDBDataToFavorites('#{medid}',false,'#{methodArgs}')">#{medid}</a>
+				</output>
+			</column>
+		</list>
+	</extends>
+	<extends path="echr"> <!-- used for creating favorite lists of medications -->
+		<list name="fdbMedications" title="FDBMedications" page="/five/list.xhtml" query="query:select descdisplay as name,medid as medid from Fdb_Dispensable where statuscode='0'" initialSort="name" visible="false">
+			<column name="name" title="Name" internal="descdisplay" width="30.0">
+				<output type="favorites">
+					<a href='#' id="#{medid}" onclick="addFDBDataToFavorites('#{medid}',false,'#{methodArgs}')">#{name}</a>
+				</output>
+				<output type="medicationDocument">
+					<a href='#' onclick="selectDrugInMedicationDocument('#{medid}','#{methodArgs}')">#{name}</a>
+				</output>
+			</column>
+			<column name="medid" title="medid" internal="medid" width="10.0">
+				<output type="favorites">
+					<a href='#' id="#{medid}" onclick="addFDBDataToFavorites('#{medid}',false,'#{methodArgs}')">#{medid}</a>
+				</output>
+				<output type="medicationDocument">
+					<a href='#' onclick="selectDrugInMedicationDocument('#{medid}','#{methodArgs}')">#{medid}</a>
+				</output>
+			</column>
+		</list>
+	</extends>
+
+
+</application>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="ejb/source"/>
+	<classpathentry kind="src" path="web/source"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/devLib"/>
+	<classpathentry kind="lib" path="lib/openjpa-2.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/openjpa-all-2.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/postgresql-9.0-801.jdbc4.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-api-1.6.1.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-simple-1.6.1.jar"/>
+	<classpathentry kind="lib" path="ejb/lib/FDBDataConnection.jar"/>
+	<classpathentry kind="lib" path="ejb/lib/fdbdif32.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
